@@ -43,8 +43,6 @@ typedef struct _OsmGpsMapPrivate OsmGpsMapPrivate;
 
 #include "osm-gps-map-layer.h"
 #include "osm-gps-map-point.h"
-#include "osm-gps-map-track.h"
-#include "osm-gps-map-polygon.h"
 #include "osm-gps-map-image.h"
 
 struct _OsmGpsMapClass
@@ -87,15 +85,8 @@ int             osm_gps_map_zoom_out                    (OsmGpsMap *map);
 void            osm_gps_map_scroll                      (OsmGpsMap *map, gint dx, gint dy);
 float           osm_gps_map_get_scale                   (OsmGpsMap *map);
 void            osm_gps_map_set_keyboard_shortcut       (OsmGpsMap *map, OsmGpsMapKey_t key, guint keyval);
-void            osm_gps_map_track_add                   (OsmGpsMap *map, OsmGpsMapTrack *track);
-void            osm_gps_map_track_remove_all            (OsmGpsMap *map);
-gboolean        osm_gps_map_track_remove                (OsmGpsMap *map, OsmGpsMapTrack *track);
-void            osm_gps_map_polygon_add                 (OsmGpsMap *map, OsmGpsMapPolygon *poly);
-void            osm_gps_map_polygon_remove_all          (OsmGpsMap *map);
-gboolean        osm_gps_map_polygon_remove                (OsmGpsMap *map, OsmGpsMapPolygon *poly);
 void            osm_gps_map_gps_add                     (OsmGpsMap *map, float latitude, float longitude, float heading);
 void            osm_gps_map_gps_clear                   (OsmGpsMap *map);
-OsmGpsMapTrack *osm_gps_map_gps_get_track               (OsmGpsMap *map);
 OsmGpsMapImage *osm_gps_map_image_add                   (OsmGpsMap *map, float latitude, float longitude, GdkPixbuf *image);
 OsmGpsMapImage *osm_gps_map_image_add_z                 (OsmGpsMap *map, float latitude, float longitude, GdkPixbuf *image, gint zorder);
 OsmGpsMapImage *osm_gps_map_image_add_with_alignment    (OsmGpsMap *map, float latitude, float longitude, GdkPixbuf *image, float xalign, float yalign);

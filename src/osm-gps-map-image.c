@@ -31,7 +31,6 @@
 #include <gdk-pixbuf/gdk-pixbuf.h>
 
 #include "converter.h"
-#include "osm-gps-map-track.h"
 #include "osm-gps-map-image.h"
 
 G_DEFINE_TYPE (OsmGpsMapImage, osm_gps_map_image, G_TYPE_OBJECT)

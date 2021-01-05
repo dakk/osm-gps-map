@@ -26,11 +26,9 @@
 #include "osm-gps-map.h"
 
 static gboolean opt_debug = FALSE;
-static gboolean opt_editable_tracks = FALSE;
 static GOptionEntry entries[] =
 {
   { "debug", 'd', 0, G_OPTION_ARG_NONE, &opt_debug, "Enable debugging", NULL },
-  { "editable-tracks", 'e', 0, G_OPTION_ARG_NONE, &opt_editable_tracks, "Make the tracks editable", NULL },
   { NULL }
 };
 
@@ -43,7 +41,6 @@ on_button_press_event (GtkWidget *widget, GdkEventButton *event, gpointer user_d
     OsmGpsMapPoint coord;
     float lat, lon;
     OsmGpsMap *map = OSM_GPS_MAP(widget);
-    OsmGpsMapTrack *othertrack = OSM_GPS_MAP_TRACK(user_data);
 
     int left_button =   (event->button == 1) && (event->state == 0);
     int middle_button = (event->button == 2) || ((event->button == 1) && (event->state & GDK_SHIFT_MASK));
@@ -56,9 +53,6 @@ on_button_press_event (GtkWidget *widget, GdkEventButton *event, gpointer user_d
         if (middle_button) {
             if (g_last_image)
                 osm_gps_map_image_remove (map, g_last_image);
-        }
-        if (right_button) {
-            osm_gps_map_track_remove(map, othertrack);
         }
     } else if (event->type == GDK_2BUTTON_PRESS) {
         if (left_button) {
@@ -73,9 +67,7 @@ on_button_press_event (GtkWidget *widget, GdkEventButton *event, gpointer user_d
                                                   lon,
                                                   g_star_image);
         }
-        if (right_button) {
-            osm_gps_map_track_add_point(othertrack, &coord);
-        }
+
     }
 
     return FALSE;
@@ -138,20 +130,11 @@ on_tiles_queued_changed (OsmGpsMap *image, GParamSpec *pspec, gpointer user_data
 
 static void
 on_gps_alpha_changed (GtkAdjustment *adjustment, gpointer user_data)
-{
-    OsmGpsMap *map = OSM_GPS_MAP(user_data);
-    OsmGpsMapTrack *track = osm_gps_map_gps_get_track (map);
-    float f = gtk_adjustment_get_value(adjustment);
-    g_object_set (track, "alpha", f, NULL);}
+{}
 
 static void
 on_gps_width_changed (GtkAdjustment *adjustment, gpointer user_data)
-{
-    OsmGpsMap *map = OSM_GPS_MAP(user_data);
-    OsmGpsMapTrack *track = osm_gps_map_gps_get_track (map);
-    float f = gtk_adjustment_get_value(adjustment);
-    g_object_set (track, "line-width", f, NULL);
-}
+{}
 
 static void
 on_star_align_changed (GtkAdjustment *adjustment, gpointer user_data)
@@ -165,21 +148,11 @@ on_star_align_changed (GtkAdjustment *adjustment, gpointer user_data)
 #if GTK_CHECK_VERSION(3,4,0)
 static void
 on_gps_color_changed (GtkColorChooser *widget, gpointer user_data)
-{
-    GdkRGBA c;
-    OsmGpsMapTrack *track = OSM_GPS_MAP_TRACK(user_data);
-    gtk_color_chooser_get_rgba (widget, &c);
-    osm_gps_map_track_set_color(track, &c);
-}
+{}
 #else
 static void
 on_gps_color_changed (GtkColorButton *widget, gpointer user_data)
-{
-    GdkRGBA c;
-    OsmGpsMapTrack *track = OSM_GPS_MAP_TRACK(user_data);
-    gtk_color_button_get_rgba (widget, &c);
-    osm_gps_map_track_set_color(track, &c);
-}
+{}
 
 #endif
 
@@ -206,7 +179,6 @@ main (int argc, char **argv)
     GtkAccelGroup *ag;
     OsmGpsMap *map;
     OsmGpsMapLayer *osd;
-    OsmGpsMapTrack *rightclicktrack;
     GError *error = NULL;
     GOptionContext *context;
 
@@ -241,13 +213,6 @@ main (int argc, char **argv)
     osm_gps_map_layer_add(OSM_GPS_MAP(map), osd);
     g_object_unref(G_OBJECT(osd));
 
-    //Add a second track for right clicks
-    rightclicktrack = osm_gps_map_track_new();
-
-    if(opt_editable_tracks)
-        g_object_set(rightclicktrack, "editable", TRUE, NULL);
-    osm_gps_map_track_add(OSM_GPS_MAP(map), rightclicktrack);
-
     //Enable keyboard navigation
     osm_gps_map_set_keyboard_shortcut(map, OSM_GPS_MAP_KEY_FULLSCREEN, GDK_KEY_F11);
     osm_gps_map_set_keyboard_shortcut(map, OSM_GPS_MAP_KEY_UP, GDK_KEY_Up);
@@ -270,9 +235,6 @@ main (int argc, char **argv)
     //Init values
     float lw,a;
     GdkRGBA c;
-    OsmGpsMapTrack *gpstrack = osm_gps_map_gps_get_track (map);
-    g_object_get (gpstrack, "line-width", &lw, "alpha", &a, NULL);
-    osm_gps_map_track_get_color(gpstrack, &c);
     gtk_adjustment_set_value (
                 GTK_ADJUSTMENT(gtk_builder_get_object(builder, "gps_width_adjustment")),
                 lw);
@@ -297,9 +259,6 @@ main (int argc, char **argv)
 
     //Connect to signals
     g_signal_connect (
-                gtk_builder_get_object(builder, "gps_colorbutton"), "color-set",
-                G_CALLBACK (on_gps_color_changed), (gpointer) gpstrack);
-    g_signal_connect (
                 gtk_builder_get_object(builder, "zoom_in_button"), "clicked",
                 G_CALLBACK (on_zoom_in_clicked_event), (gpointer) map);
     g_signal_connect (
@@ -320,8 +279,6 @@ main (int argc, char **argv)
     g_signal_connect (
                 gtk_builder_get_object(builder, "star_yalign_adjustment"), "value-changed",
                 G_CALLBACK (on_star_align_changed), (gpointer) "y-align");
-    g_signal_connect (G_OBJECT (map), "button-press-event",
-                G_CALLBACK (on_button_press_event), (gpointer) rightclicktrack);
     g_signal_connect (G_OBJECT (map), "button-release-event",
                 G_CALLBACK (on_button_release_event),
                 (gpointer) gtk_builder_get_object(builder, "text_entry"));

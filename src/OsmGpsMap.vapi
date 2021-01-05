@@ -21,8 +21,6 @@ namespace OsmGps {
 		[Version (since = "0.7.0")]
 		public void gps_clear ();
 		[Version (since = "0.7.0")]
-		public unowned OsmGps.MapTrack gps_get_track ();
-		[Version (since = "0.7.0")]
 		public OsmGps.MapImage image_add (float latitude, float longitude, Gdk.Pixbuf image);
 		[Version (since = "0.7.0")]
 		public OsmGps.MapImage image_add_with_alignment (float latitude, float longitude, Gdk.Pixbuf image, float xalign, float yalign);
@@ -42,9 +40,6 @@ namespace OsmGps {
 		public void layer_remove_all ();
 		public bool map_redraw ();
 		public void map_redraw_idle ();
-		public void polygon_add (OsmGps.MapPolygon poly);
-		public bool polygon_remove (OsmGps.MapPolygon poly);
-		public void polygon_remove_all ();
 		public void scroll (int dx, int dy);
 		public void set_center (float latitude, float longitude);
 		[Version (since = "0.7.0")]
@@ -52,12 +47,6 @@ namespace OsmGps {
 		public void set_keyboard_shortcut (OsmGps.MapKey_t key, uint keyval);
 		public int set_zoom (int zoom);
 		public void set_zoom_offset (int zoom_offset);
-		[Version (since = "0.7.0")]
-		public void track_add (OsmGps.MapTrack track);
-		[Version (since = "0.7.0")]
-		public bool track_remove (OsmGps.MapTrack track);
-		[Version (since = "0.7.0")]
-		public void track_remove_all ();
 		public void zoom_fit_bbox (float latitude1, float latitude2, float longitude1, float longitude2);
 		public int zoom_in ();
 		public int zoom_out ();
@@ -67,12 +56,6 @@ namespace OsmGps {
 		public float auto_center_threshold { get; set construct; }
 		[NoAccessorMethod]
 		public int drag_limit { get; construct; }
-		[NoAccessorMethod]
-		public int gps_track_highlight_radius { get; set construct; }
-		[NoAccessorMethod]
-		public int gps_track_point_radius { get; set construct; }
-		[NoAccessorMethod]
-		public float gps_track_width { get; set construct; }
 		[NoAccessorMethod]
 		public float latitude { get; }
 		[NoAccessorMethod]
@@ -162,56 +145,6 @@ namespace OsmGps {
 		public MapPoint.radians (float rlat, float rlon);
 		public void set_degrees (float lat, float lon);
 		public void set_radians (float rlat, float rlon);
-	}
-	[CCode (cheader_filename = "osm-gps-map.h", type_id = "osm_gps_map_polygon_get_type ()")]
-	public class MapPolygon : GLib.Object {
-		[CCode (has_construct_function = false)]
-		public MapPolygon ();
-		public unowned OsmGps.MapTrack get_track ();
-		[NoAccessorMethod]
-		public bool editable { get; set construct; }
-		[NoAccessorMethod]
-		public float shade_alpha { get; set construct; }
-		[NoAccessorMethod]
-		public bool shaded { get; set construct; }
-		[NoAccessorMethod]
-		public void* track { get; set construct; }
-		[NoAccessorMethod]
-		public bool visible { get; set construct; }
-		[NoAccessorMethod]
-		public bool breakable { get; set construct; }
-	}
-	[CCode (cheader_filename = "osm-gps-map.h", type_id = "osm_gps_map_track_get_type ()")]
-	public class MapTrack : GLib.Object {
-		[CCode (has_construct_function = false)]
-		public MapTrack ();
-		[Version (since = "0.7.0")]
-		public void add_point (OsmGps.MapPoint point);
-		public void get_color (Gdk.RGBA color);
-		public double get_length ();
-		public unowned OsmGps.MapPoint get_point (int pos);
-		[Version (since = "0.7.0")]
-		public unowned GLib.SList<OsmGps.MapPoint> get_points ();
-		public void insert_point (OsmGps.MapPoint np, int pos);
-		public int n_points ();
-		public void remove_point (int pos);
-		public void set_color (Gdk.RGBA color);
-		[NoAccessorMethod]
-		public float alpha { get; set construct; }
-		[NoAccessorMethod]
-		public Gdk.RGBA color { get; set; }
-		[NoAccessorMethod]
-		public bool editable { get; set construct; }
-		[NoAccessorMethod]
-		public float line_width { get; set construct; }
-		[NoAccessorMethod]
-		public void* track { get; construct; }
-		[NoAccessorMethod]
-		public bool visible { get; set construct; }
-		public signal void point_added (OsmGps.MapPoint arg1);
-		public signal void point_changed (int object);
-		public signal void point_inserted (int object);
-		public signal void point_removed (int object);
 	}
 	[CCode (cheader_filename = "osm-gps-map.h", type_id = "osm_gps_map_layer_get_type ()")]
 	public interface MapLayer : GLib.Object {
