@@ -41,8 +41,6 @@ sources_public_h =          \
     osm-gps-map.h           \
     osm-gps-map-osd.h       \
     osm-gps-map-layer.h     \
-    osm-gps-map-track.h     \
-	osm-gps-map-polygon.h	\
     osm-gps-map-point.h     \
     osm-gps-map-image.h     \
     osm-gps-map-widget.h    \
@@ -53,8 +51,6 @@ sources_c =                 \
     osd-utils.c             \
     osm-gps-map-osd.c       \
     osm-gps-map-layer.c     \
-    osm-gps-map-track.c     \
-	osm-gps-map-polygon.c	\
     osm-gps-map-point.c     \
     osm-gps-map-image.c     \
     osm-gps-map-widget.c    \

@@ -20,10 +20,6 @@ osm_gps_map_convert_geographic_to_screen
 osm_gps_map_convert_screen_to_geographic
 osm_gps_map_gps_add
 osm_gps_map_gps_clear
-osm_gps_map_gps_get_track
-osm_gps_map_track_add
-osm_gps_map_track_remove
-osm_gps_map_track_remove_all
 osm_gps_map_image_add
 osm_gps_map_image_add_with_alignment
 osm_gps_map_image_remove
@@ -38,9 +34,6 @@ osm_gps_map_layer_remove_all
 <TITLE>OsmGpsMap Deprecated</TITLE>
 osm_gps_map_draw_gps
 osm_gps_map_clear_gps
-osm_gps_map_add_track
-osm_gps_map_replace_track
-osm_gps_map_clear_tracks
 osm_gps_map_add_image
 osm_gps_map_add_image_with_alignment
 osm_gps_map_remove_image
@@ -91,19 +84,3 @@ osm_gps_map_point_copy
 osm_gps_map_point_free
 </SECTION>
 
-<SECTION>
-<FILE>osm-gps-map-track</FILE>
-<TITLE>OsmGpsMapTrack</TITLE>
-OsmGpsMapTrack
-OsmGpsMapTrackClass
-osm_gps_map_track_add_point
-osm_gps_map_track_get_color
-osm_gps_map_track_get_points
-osm_gps_map_track_get_length
-osm_gps_map_track_get_point
-osm_gps_map_track_insert_point
-osm_gps_map_track_n_points
-osm_gps_map_track_remove_point
-osm_gps_map_track_set_color
-osm_gps_map_track_new
-</SECTION>
