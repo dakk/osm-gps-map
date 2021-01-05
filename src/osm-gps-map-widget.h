@@ -72,18 +72,10 @@ typedef enum {
 } OsmGpsMapKey_t;
 
 #define OSM_GPS_MAP_INVALID         (0.0/0.0)
-#define OSM_GPS_MAP_CACHE_DISABLED  "none://"
-#define OSM_GPS_MAP_CACHE_AUTO      "auto://"
-#define OSM_GPS_MAP_CACHE_FRIENDLY  "friendly://"
 
 GType           osm_gps_map_get_type                    (void) G_GNUC_CONST;
 
 GtkWidget*      osm_gps_map_new                         (void);
-
-gchar*          osm_gps_map_get_default_cache_directory (void);
-
-void            osm_gps_map_download_maps               (OsmGpsMap *map, OsmGpsMapPoint *pt1, OsmGpsMapPoint *pt2, int zoom_start, int zoom_end);
-void            osm_gps_map_download_cancel_all         (OsmGpsMap *map);
 void            osm_gps_map_get_bbox                    (OsmGpsMap *map, OsmGpsMapPoint *pt1, OsmGpsMapPoint *pt2);
 void            osm_gps_map_zoom_fit_bbox               (OsmGpsMap *map, float latitude1, float latitude2, float longitude1, float longitude2);
 void            osm_gps_map_set_center_and_zoom         (OsmGpsMap *map, float latitude, float longitude, int zoom);

@@ -176,10 +176,7 @@ Enter an repository URL to fetch map tiles from in the box below. Special metach
         GObject.timeout_add(500, self.print_tiles)
 
     def disable_cache_toggled(self, btn):
-        if btn.props.active:
-            self.osm.props.tile_cache = osmgpsmap.MAP_CACHE_DISABLED
-        else:
-            self.osm.props.tile_cache = osmgpsmap.MAP_CACHE_AUTO
+        pass
 
     def on_show_tooltips_toggled(self, btn):
         self.show_tooltips = btn.props.active

@@ -45,7 +45,6 @@ sources_public_h =          \
 	osm-gps-map-polygon.h	\
     osm-gps-map-point.h     \
     osm-gps-map-image.h     \
-    osm-gps-map-source.h    \
     osm-gps-map-widget.h    \
     osm-gps-map-compat.h
 
@@ -58,7 +57,6 @@ sources_c =                 \
 	osm-gps-map-polygon.c	\
     osm-gps-map-point.c     \
     osm-gps-map-image.c     \
-    osm-gps-map-source.c    \
     osm-gps-map-widget.c    \
     osm-gps-map-compat.c
 
@@ -76,7 +74,8 @@ CLEANFILES =
 ## GObject Introspection Support
 -include $(INTROSPECTION_MAKEFILE)
 INTROSPECTION_GIRS =
-INTROSPECTION_SCANNER_ARGS = $(INTROSPECTION_FLAGS) --add-include-path=$(srcdir) --add-include-path=$(builddir) --warn-all --warn-error
+INTROSPECTION_SCANNER_ARGS = $(INTROSPECTION_FLAGS) --add-include-path=$(srcdir) --add-include-path=$(builddir) --warn-all 
+# --warn-error
 INTROSPECTION_COMPILER_ARGS = --includedir=$(srcdir) --includedir=$(builddir)
 
 if HAVE_INTROSPECTION

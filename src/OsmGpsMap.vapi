@@ -10,13 +10,9 @@ namespace OsmGps {
 		public void convert_geographic_to_screen (OsmGps.MapPoint pt, out int pixel_x, out int pixel_y);
 		[Version (since = "0.7.0")]
 		public void convert_screen_to_geographic (int pixel_x, int pixel_y, OsmGps.MapPoint pt);
-		[Version (since = "0.7.0")]
-		public void download_cancel_all ();
-		public void download_maps (OsmGps.MapPoint pt1, OsmGps.MapPoint pt2, int zoom_start, int zoom_end);
 		[NoWrapper]
 		public virtual void draw_gps_point (Cairo.Context cr);
 		public void get_bbox (OsmGps.MapPoint pt1, OsmGps.MapPoint pt2);
-		public static string get_default_cache_directory ();
 		[Version (since = "0.7.0")]
 		public OsmGps.MapPoint get_event_location (Gdk.EventButton event);
 		public float get_scale ();
@@ -56,13 +52,6 @@ namespace OsmGps {
 		public void set_keyboard_shortcut (OsmGps.MapKey_t key, uint keyval);
 		public int set_zoom (int zoom);
 		public void set_zoom_offset (int zoom_offset);
-		public static unowned string source_get_copyright (OsmGps.MapSource_t source);
-		public static unowned string source_get_friendly_name (OsmGps.MapSource_t source);
-		public static unowned string source_get_image_format (OsmGps.MapSource_t source);
-		public static int source_get_max_zoom (OsmGps.MapSource_t source);
-		public static int source_get_min_zoom (OsmGps.MapSource_t source);
-		public static unowned string source_get_repo_uri (OsmGps.MapSource_t source);
-		public static bool source_is_valid (OsmGps.MapSource_t source);
 		[Version (since = "0.7.0")]
 		public void track_add (OsmGps.MapTrack track);
 		[Version (since = "0.7.0")]
@@ -77,8 +66,6 @@ namespace OsmGps {
 		[NoAccessorMethod]
 		public float auto_center_threshold { get; set construct; }
 		[NoAccessorMethod]
-		public bool auto_download { get; set construct; }
-		[NoAccessorMethod]
 		public int drag_limit { get; construct; }
 		[NoAccessorMethod]
 		public int gps_track_highlight_radius { get; set construct; }
@@ -86,8 +73,6 @@ namespace OsmGps {
 		public int gps_track_point_radius { get; set construct; }
 		[NoAccessorMethod]
 		public float gps_track_width { get; set construct; }
-		[NoAccessorMethod]
-		public string image_format { owned get; construct; }
 		[NoAccessorMethod]
 		public float latitude { get; }
 		[NoAccessorMethod]
@@ -103,25 +88,13 @@ namespace OsmGps {
 		[NoAccessorMethod]
 		public int min_zoom { get; construct; }
 		[NoAccessorMethod]
-		public string proxy_uri { owned get; construct; }
-		[NoAccessorMethod]
 		public bool record_trip_history { get; set construct; }
-		[NoAccessorMethod]
-		public string repo_uri { owned get; construct; }
 		[NoAccessorMethod]
 		public bool show_gps_point { get; set construct; }
 		[NoAccessorMethod]
 		public bool show_trip_history { get; set construct; }
 		[NoAccessorMethod]
-		public string tile_cache { owned get; set construct; }
-		[NoAccessorMethod]
-		public string tile_cache_base { owned get; construct; }
-		[NoAccessorMethod]
 		public int tile_zoom_offset { get; construct; }
-		[NoAccessorMethod]
-		public int tiles_queued { get; }
-		[NoAccessorMethod]
-		public string user_agent { owned get; set construct; }
 		[NoAccessorMethod]
 		public int zoom { get; construct; }
 		public signal void changed ();
@@ -159,8 +132,6 @@ namespace OsmGps {
 		public int osd_y { get; set construct; }
 		[NoAccessorMethod]
 		public bool show_coordinates { get; set construct; }
-		[NoAccessorMethod]
-		public bool show_copyright { get; set construct; }
 		[NoAccessorMethod]
 		public bool show_crosshair { get; set construct; }
 		[NoAccessorMethod]
@@ -260,30 +231,6 @@ namespace OsmGps {
 		RIGHT,
 		MAX
 	}
-	[CCode (cheader_filename = "osm-gps-map.h", cprefix = "OSM_GPS_MAP_SOURCE_", has_type_id = false)]
-	public enum MapSource_t {
-		NULL,
-		OPENSTREETMAP,
-		OPENSTREETMAP_RENDERER,
-		OPENAERIALMAP,
-		MAPS_FOR_FREE,
-		OPENCYCLEMAP,
-		OSM_PUBLIC_TRANSPORT,
-		GOOGLE_STREET,
-		GOOGLE_SATELLITE,
-		GOOGLE_HYBRID,
-		VIRTUAL_EARTH_STREET,
-		VIRTUAL_EARTH_SATELLITE,
-		VIRTUAL_EARTH_HYBRID,
-		OSMC_TRAILS,
-		LAST
-	}
-	[CCode (cheader_filename = "osm-gps-map.h", cname = "OSM_GPS_MAP_CACHE_AUTO")]
-	public const string MAP_CACHE_AUTO;
-	[CCode (cheader_filename = "osm-gps-map.h", cname = "OSM_GPS_MAP_CACHE_DISABLED")]
-	public const string MAP_CACHE_DISABLED;
-	[CCode (cheader_filename = "osm-gps-map.h", cname = "OSM_GPS_MAP_CACHE_FRIENDLY")]
-	public const string MAP_CACHE_FRIENDLY;
 	[CCode (cheader_filename = "osm-gps-map.h", cname = "OSM_GPS_MAP_INVALID")]
 	public const int MAP_INVALID;
 }
